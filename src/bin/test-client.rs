@@ -15,19 +15,19 @@ async fn main() {
     let mut reader = BufReader::new(reader);
     let mut line = String::new();
 
-    let (tx, mut rx) = broadcast::channel::<bool>(5);
+    // let (tx, mut rx) = broadcast::channel::<bool>(5);
 
+    println!("Command: ");
     tokio::spawn(async move {
         loop {
-            print!("Command: ");
             io::stdin()
                 .read_line(&mut command)
                 .expect("Failed to read command");
             let _ = writer.write_all(command.as_bytes()).await;
             command.clear();
-            if rx.recv().await.unwrap(){
-                break;
-            }
+            // if rx.recv().await.unwrap(){
+            //     break;
+            // }
         }
     });
     
@@ -39,11 +39,12 @@ async fn main() {
             "server closed" => {
                 println!("Server has been closed, connection terminated.");
                 // client_handle.abort();
-                let _ = tx.send(true);
+                // let _ = tx.send(true);
                 return;
             },
             l => {
                 println!("{}", l);
+                println!("Command: ");
             }
         }
         line.clear();
