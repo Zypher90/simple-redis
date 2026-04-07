@@ -1,0 +1,4 @@
+set name foo
+set age 19
+set num 1202
+update age 20
